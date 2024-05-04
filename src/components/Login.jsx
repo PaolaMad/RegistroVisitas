@@ -1,6 +1,7 @@
 import { FiEyeOff } from "react-icons/fi";
 import { LuEye } from "react-icons/lu";
 import { CiLock } from "react-icons/ci";
+import { FaRegUser } from "react-icons/fa6";
 import { useState } from "react"
 
 export const Login = () => {
@@ -21,8 +22,9 @@ export const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center antialiased">
-      <div className="flex flex-col justify-center items-center bg-yellow-700 antialiased mt-28 rounded-md p-8">
+
+    <div className="flex justify-center items-center antialiased bg-yellow-600 h-screen">
+      <div className="flex flex-col justify-center items-center bg-yellow-700 antialiased  rounded-md p-8">
         {/* TITULO */}
         <h1 className="font-bold text-2xl text-gray-200">Inicio de Sesión</h1>
 
@@ -31,18 +33,19 @@ export const Login = () => {
             <div className="relative">
               <input
                 type="text"
-                className="w-full border border-gray-600 outline-none px-8 py-2 rounded-lg"
+                className="w-full border border-gray-600 outline-none px-8 py-1 rounded-lg"
                 placeholder="Username"
                 value={login.userName}
                 onChange={(e) => setLogin({ ...login, userName: e.target.value })}
               />
+              <FaRegUser className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500"/>
             </div>
 
             <div className="relative mt-7">
               <CiLock className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full border border-gray-600 outline-none px-8 py-2 rounded-lg"
+                className="w-full border border-gray-600 outline-none px-8 py-1 rounded-lg"
                 placeholder="Contraseña"
                 value={login.password}
                 onChange={(e) => setLogin({ ...login, password: e.target.value })}
@@ -74,7 +77,7 @@ export const Login = () => {
 
             <button
               type="submit"
-              className="bg-gray-200 text-yellow-700 font-semibold rounded-xl w-full uppercase mt-4 p-4 
+              className="bg-gray-200 text-yellow-700 font-semibold rounded-xl w-full uppercase mt-5 p-2 
                  hover:text-gray-600 cursor-pointer"
             >
               Iniciar Sesión
@@ -85,6 +88,7 @@ export const Login = () => {
 
       </div>
     </div>
+
   )
 }
 
