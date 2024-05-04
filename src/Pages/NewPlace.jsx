@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { constants } from "../helpers/constants";
+import { useNavigate } from "react-router-dom";
 
 const NewPlace = () => {
     const [newPlace, setNewPlace] = useState({
@@ -8,6 +9,8 @@ const NewPlace = () => {
         score: '',
         location: '',
     });
+
+    const navigate = useNavigate();
 
     const { API_URL } = constants();
 
@@ -26,6 +29,7 @@ const NewPlace = () => {
             if (!response.ok) {
                 throw new Error('Error en el inicio de sesión');
             }
+            
 
             const result = await response.json();
             login(result.data);
