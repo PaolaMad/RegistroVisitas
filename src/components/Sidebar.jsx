@@ -25,6 +25,14 @@ const Sidebar = () => {
     const [open, setOpen] = useState(true);
     const navigate = useNavigate();
     // const {logout}= useContext();
+
+    const handleLogout = () =>{
+
+        localStorage.clear();
+    
+        navigate('/login')
+    
+      } 
     
     return (
         <div className="flex">
@@ -77,7 +85,7 @@ const Sidebar = () => {
                 <ul className="  absolute bottom-2 ">
                     <NavItem
                         icon={<CiLogout />}
-                        onClick={() => navigate("/")}
+                        onClick={handleLogout}
                         open={open}
                         title={"Cerrar Sesion"}
                     />

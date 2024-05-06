@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext"
-import { useEffect } from "react";
 
 const init = () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -15,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const userPre = init();
 
-    //PERMITE ALMACENAR EN LOCAL STORAGE
+    //PERMITE TOMAR INFORMACION DEL LOCALE STORAGE
     const login = (user) => {
         localStorage.setItem('user', JSON.stringify(user));
         navigate('/home');

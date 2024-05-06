@@ -22,7 +22,6 @@ export const Login = () => {
     password: ''
   });
 
-
   const { API_URL } = constants();
 
   const handleSubmit = async (e) => {

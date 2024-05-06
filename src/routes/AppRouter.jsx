@@ -15,7 +15,7 @@ import Login from "../components/Login"
 const AppRouter = () => {
     return (
         <Routes>
-            <Route path="/" element={
+            <Route path="/login" element={
                 <PublicRoute>
                     <Login />
                 </PublicRoute>
