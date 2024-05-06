@@ -10,11 +10,11 @@ const NewPlace = () => {
     const [hover, setHover] = useState('');
 
     const [newPlace, setNewPlace] = useState({
-        namePlace: '',
+        placeName: '',
         description: '',
-        score: '',
-        latitud: '',
-        longitud: '',
+        rating: '',
+        latitude: '',
+        longitude: '',
     });
 
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ const NewPlace = () => {
 
     const handleRating = (currentRating) => {
         setRating(currentRating);
-        setNewPlace({ ...newPlace, score: currentRating });
+        setNewPlace({ ...newPlace, rating: currentRating });
         console.log(currentRating);
 
     }
@@ -94,7 +94,7 @@ const NewPlace = () => {
                                 Calificacion
                             </label>
                             {[...Array(5)].map((_, i) => {
-                                const currentRating = i + 1;
+                                const currentRating = i + 0;
                                 return (
                                     <label key={i}>
 
@@ -105,12 +105,11 @@ const NewPlace = () => {
                                             value={currentRating}
                                             onClick={() => handleRating(currentRating)}
                                         />
-                                        {hover >= i ? (
+                                        {currentRating <= hover ? (
                                             <MdOutlineStar
 
                                                 className="cursor-pointer text-2xl text-white ml-1 mr-1"
-                                                onMouseEnter={() => setHover(i)}
-                                                onMouseLeave={() => setHover(null)}
+                                                
                                             />
                                         ) : (
                                             <MdOutlineStarBorder
@@ -133,15 +132,15 @@ const NewPlace = () => {
                                     className="border-2 w-full p-2 placeholder-gray-600 rounded-md"
                                     type="text"
                                     placeholder="Latitud"
-                                    value={newPlace.latitud}
-                                    onChange={(e) => setNewPlace({ ...newPlace, latitud: e.target.value })}
+                                    value={newPlace.latitude}
+                                    onChange={(e) => setNewPlace({ ...newPlace, latitude: e.target.value })}
                                 />
                                 <input
                                     className="border-2 w-full p-2 mt-6 placeholder-gray-600 rounded-md"
                                     type="text"
                                     placeholder="Longitud"
-                                    value={newPlace.longitud}
-                                    onChange={(e) => setNewPlace({ ...newPlace, longitud: e.target.value })}
+                                    value={newPlace.longitude}
+                                    onChange={(e) => setNewPlace({ ...newPlace, longitude: e.target.value })}
                                 />
                             </div>
                         </div>

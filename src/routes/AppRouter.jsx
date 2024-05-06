@@ -17,7 +17,7 @@ const AppRouter = () => {
         <Routes>
             <Route path="/" element={
                 <PublicRoute>
-                    <Login/>
+                    <Login />
                 </PublicRoute>
             } />
 

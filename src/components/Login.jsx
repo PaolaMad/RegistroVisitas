@@ -8,7 +8,7 @@ import { constants } from "../helpers/constants";
 import { AuthContext } from "../context/AuthContext";
 
 export const Login = () => {
-  // const { loginF } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = async (e) => {
 
@@ -17,7 +17,7 @@ export const Login = () => {
 
   const navigate = useNavigate();
 
-  const [login, setLogin] = useState({
+  const [loginForm, setLogin] = useState({
     userName: '',
     password: ''
   });
@@ -34,7 +34,7 @@ export const Login = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(login)
+        body: JSON.stringify(loginForm)
       });
       
       navigate('/home');
@@ -43,7 +43,7 @@ export const Login = () => {
         throw new Error('Error en el inicio de sesion')
       }
       const result = await response.json();
-      login.result(data);
+      login(result.data);
       console.log(result);
 
     } catch (error) {
@@ -66,8 +66,8 @@ export const Login = () => {
                 type="text"
                 className="w-full border border-gray-600 outline-none px-8 py-1 rounded-lg"
                 placeholder="Username"
-                value={login.userName}
-                onChange={(e) => setLogin({ ...login, userName: e.target.value })}
+                value={loginForm.userName}
+                onChange={(e) => setLogin({ ...loginForm, userName: e.target.value })}
               />
               <FaRegUser className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
             </div>
@@ -78,8 +78,8 @@ export const Login = () => {
                 type={showPassword ? "text" : "password"}
                 className="w-full border border-gray-600 outline-none px-8 py-1 rounded-lg"
                 placeholder="Contraseña"
-                value={login.password}
-                onChange={(e) => setLogin({ ...login, password: e.target.value })}
+                value={loginForm.password}
+                onChange={(e) => setLogin({ ...loginForm, password: e.target.value })}
               />
               {showPassword ? (
                 <LuEye
