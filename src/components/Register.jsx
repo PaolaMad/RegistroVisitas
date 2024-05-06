@@ -3,7 +3,10 @@ import { LuEye } from "react-icons/lu";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { CiLock } from "react-icons/ci";
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { AuthContext } from "../context/AuthContext";
+import { constants } from "../helpers/constants";
+import { useNavigate } from "react-router-dom";
 
 
 const Register = () => {
@@ -13,21 +16,52 @@ const Register = () => {
     setShowPassword(!showPassword);
   };
 
-  const [login, setLogin] = useState({
+  const { login } = useContext(AuthContext);
+
+  const { API_URL } = constants();
+
+  const navigate = useNavigate();
+
+  const [register, setRegister] = useState({
     userName: '',
     email: '',
     password: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+
+      const response = await fetch(`${API_URL}/api/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(register)
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al refistrarse')
+      }
+
+      const result = await response.json();
+
+      login(result.data);
+
+      navigate('/home')
+
+    } catch (error) {
+
+      console.log(error)
+
+    }
 
   }
 
   return (
 
     <div className="flex justify-center items-center antialiased bg-yellow-600 h-screen">
-
 
       <div className="flex flex-col justify-center items-center px-16 shadow-2xl bg-yellow-700 antialiased rounded-md p-8">
         {/* TITULO */}
@@ -41,8 +75,8 @@ const Register = () => {
                 type="text"
                 className="w-full border border-gray-600 outline-none px-8 py-2 rounded-lg"
                 placeholder="Username"
-                value={login.userName}
-                onChange={(e) => setLogin({ ...login, userName: e.target.value })}
+                value={register.userName}
+                onChange={(e) => setRegister({ ...register, userName: e.target.value })}
               />
               <FaRegUser className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
             </div>
@@ -53,8 +87,8 @@ const Register = () => {
                 type="text"
                 className="w-full border border-gray-600 outline-none px-8 py-2 rounded-lg"
                 placeholder="Correo Electrónico"
-                value={login.email}
-                onChange={(e) => setLogin({ ...login, email: e.target.value })}
+                value={register.email}
+                onChange={(e) => setRegister({ ...register, email: e.target.value })}
               />
               <MdOutlineEmail className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
             </div>
@@ -65,8 +99,8 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 className="w-full border border-gray-600 outline-none px-8 py-2 rounded-lg"
                 placeholder="Contraseña"
-                value={login.password}
-                onChange={(e) => setLogin({ ...login, password: e.target.value })}
+                value={register.password}
+                onChange={(e) => setRegister({ ...register, password: e.target.value })}
               />
               {showPassword ? (
                 <LuEye

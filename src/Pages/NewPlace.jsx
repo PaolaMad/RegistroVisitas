@@ -29,24 +29,25 @@ const NewPlace = () => {
     }
 
     const handleSubmit = async () => {
+
         e.preventDefault();
 
         try {
-            const response = await fetch(`${API_URL}/auth/login`, {
+            const response = await fetch(`https://localhost:7252/api/place`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${user.token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(loginForm)
+                body: JSON.stringify(newPlace)
             });
 
             if (!response.ok) {
-                throw new Error('Error en el inicio de sesión');
+                throw new Error('Error al añadir la visita');
             }
 
 
-            const result = await response.json();
-            login(result.data);
+            setNewPlace(newPlace)
 
         } catch (error) {
             console.log(error);
@@ -109,7 +110,7 @@ const NewPlace = () => {
                                             <MdOutlineStar
 
                                                 className="cursor-pointer text-2xl text-white ml-1 mr-1"
-                                                
+
                                             />
                                         ) : (
                                             <MdOutlineStarBorder

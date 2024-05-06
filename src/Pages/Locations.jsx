@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl';
 import { MdPlace } from 'react-icons/md';
 
-const Locations = ({ initialLocations }) => {
+const Locations = ({ initialLocations}) => {
     const [viewport, setViewport] = useState({
-        latitude: 15.0000000,
-        longitude: -86.5000000,
+        latitude: {latitude},
+        longitude: {longitude},
         zoom: 5,
         width: '500px',
         height: '500px'
