@@ -6,7 +6,10 @@ import NewPlace from "../Pages/NewPlace"
 import Sidebar from "../components/Sidebar"
 import { Home } from "../Pages/Home"
 import Visits from "../Pages/Visits"
-import Map from "../Pages/Map"
+import Locations from "../Pages/Locations"
+import { PrivateRoute } from "./PrivateRoute"
+
+
 
 const AppRouter = () => {
     return (
@@ -34,14 +37,19 @@ const AppRouter = () => {
                 <div className="flex w-full flex-1 h-screen bg-gray-blue">
                     <Sidebar/>
                     <div className="flex-1 container-md mx-10">
+                        
+                        {/* <PrivateRoute> */}
                         <Outlet/>
+                        {/* </PrivateRoute> */}
+
                     </div>
                 </div>
             }>
 
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/visitas" element={<Visits/>}/>
-                <Route path="/mapa" element={<Map/>}/>
+                <Route path="/mapa" element={<Locations/>}/>
+                {/* <Route path="/p" element={<PruebaMap/>}/> */}
 
             </Route>
 

@@ -1,3 +1,4 @@
+import Card from "../components/Card"
 import { Title } from "../components/Title"
 
 const Visits = () => {
@@ -6,6 +7,8 @@ const Visits = () => {
         <Title>
             Mis Visitas
         </Title>
+
+        <Card/>
     </div>
   )
 }

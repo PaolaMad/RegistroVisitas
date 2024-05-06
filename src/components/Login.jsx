@@ -2,22 +2,52 @@ import { FiEyeOff } from "react-icons/fi";
 import { LuEye } from "react-icons/lu";
 import { CiLock } from "react-icons/ci";
 import { FaRegUser } from "react-icons/fa6";
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { useNavigate } from "react-router-dom";
+import { constants } from "../helpers/constants";
+import { AuthContext } from "../context/AuthContext";
 
 export const Login = () => {
+  // const { loginF } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = async (e) => {
 
     setShowPassword(!showPassword);
   };
 
+  const navigate = useNavigate();
+
   const [login, setLogin] = useState({
     userName: '',
     password: ''
   });
 
-  const handleSubmit = (e) => {
+  const { API_URL } = constants();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // try {
+    //   const response = await fetch(`${API_URL}/api/auth/login`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(login)
+    //   });
+
+    //   navigate('/home');
+
+    //   if (!response.ok) {
+    //     throw new Error('Error en el inicio de sesion')
+    //   }
+    //   const result = await response.json();
+    //   login.result(data);
+    //   // console.log(result);
+
+    // } catch (error) {
+    //   console.log(error)
+    // }
 
   }
 
@@ -38,7 +68,7 @@ export const Login = () => {
                 value={login.userName}
                 onChange={(e) => setLogin({ ...login, userName: e.target.value })}
               />
-              <FaRegUser className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500"/>
+              <FaRegUser className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
             </div>
 
             <div className="relative mt-7">
@@ -63,21 +93,16 @@ export const Login = () => {
               )}
             </div>
 
-            <div className="text-white text-sm mt-4 ">
-              <a className="p-2 hover:font-bold hover:underline" href="">
-                ¿Olvidaste tu contraseña?
-              </a>
-              <a
-                className="p-6 hover:font-bold hover:underline"
-                href="/registro"
-              >
-                Registrarme
-              </a>
-            </div>
+            <button
+              onClick={() => navigate("/registro")}
+              className="flex justify-center items-center shadow-2xl rounded-lg text-white 
+            text-sm mt-1 px-24 p-1 hover:font-bold hover:underline">
+              Registrarme
+            </button>
 
             <button
               type="submit"
-              className="bg-gray-200 text-yellow-700 font-semibold rounded-xl w-full uppercase mt-5 p-2 
+              className="bg-gray-200 text-yellow-700 font-bold rounded-xl w-full uppercase mt-5 p-1 
                  hover:text-gray-600 cursor-pointer"
             >
               Iniciar Sesión

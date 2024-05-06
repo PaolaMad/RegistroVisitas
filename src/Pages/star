@@ -7,7 +7,7 @@ import { MdOutlineStar } from "react-icons/md";
 const NewPlace = () => {
 
     const [rating, setRating] = useState(null);
-    const [hover, setHover] = useState('');
+    const [hover, setHover] = useState(null);
 
     const [newPlace, setNewPlace] = useState({
         namePlace: '',
@@ -93,7 +93,6 @@ const NewPlace = () => {
                                 const currentRating = i + 1;
                                 return (
                                     <label key={i}>
-                                        
                                         <input
                                             type="radio"
                                             name="rating"
