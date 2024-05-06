@@ -1,5 +1,5 @@
 import { Outlet, Route, Routes } from "react-router-dom"
-import Login from "../components/Login"
+
 import { PublicRoute } from "./PublicRoute"
 import Register from "../components/Register"
 import NewPlace from "../Pages/NewPlace"
@@ -8,6 +8,7 @@ import { Home } from "../Pages/Home"
 import Visits from "../Pages/Visits"
 import Locations from "../Pages/Locations"
 import { PrivateRoute } from "./PrivateRoute"
+import Login from "../components/Login"
 
 
 
@@ -16,7 +17,7 @@ const AppRouter = () => {
         <Routes>
             <Route path="/" element={
                 <PublicRoute>
-                    <Login />
+                    <Login/>
                 </PublicRoute>
             } />
 
@@ -25,31 +26,27 @@ const AppRouter = () => {
                     <Register />
                 </PublicRoute>
             } />
-            <Route path="/nuevaVisita" element={
-                <PublicRoute>
-                    <NewPlace />
-                </PublicRoute>
-            } />
 
 
-            <Route 
-            element={
-                <div className="flex w-full flex-1 h-screen bg-gray-blue">
-                    <Sidebar/>
-                    <div className="flex-1 container-md mx-10">
-                        
-                        {/* <PrivateRoute> */}
-                        <Outlet/>
-                        {/* </PrivateRoute> */}
 
+            <Route
+                element={
+                    <div className="flex w-full flex-1 h-screen bg-gray-blue">
+                        <Sidebar />
+                        <div className="flex-1 container-md mx-10">
+
+                            <PrivateRoute>
+                                <Outlet />
+                            </PrivateRoute>
+
+                        </div>
                     </div>
-                </div>
-            }>
+                }>
 
-                <Route path="/home" element={<Home/>}/>
-                <Route path="/visitas" element={<Visits/>}/>
-                <Route path="/mapa" element={<Locations/>}/>
-                {/* <Route path="/p" element={<PruebaMap/>}/> */}
+                <Route path="/home" element={<Home />} />
+                <Route path="/visitas" element={<Visits />} />
+                <Route path="/mapa" element={<Locations />} />
+                <Route path="/nuevaVisita" element={<NewPlace />} />
 
             </Route>
 

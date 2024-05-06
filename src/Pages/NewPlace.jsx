@@ -13,7 +13,8 @@ const NewPlace = () => {
         namePlace: '',
         description: '',
         score: '',
-        location: '',
+        latitud: '',
+        longitud: '',
     });
 
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const NewPlace = () => {
         setRating(currentRating);
         setNewPlace({ ...newPlace, score: currentRating });
         console.log(currentRating);
-        
+
     }
 
     const handleSubmit = async () => {
@@ -89,11 +90,14 @@ const NewPlace = () => {
                         </div>
 
                         <div className="flex">
+                            <label className="text-white font-semibold mr-2 mb-2">
+                                Calificacion
+                            </label>
                             {[...Array(5)].map((_, i) => {
                                 const currentRating = i + 1;
                                 return (
                                     <label key={i}>
-                                        
+
                                         <input
                                             type="radio"
                                             name="rating"
@@ -103,7 +107,7 @@ const NewPlace = () => {
                                         />
                                         {hover >= i ? (
                                             <MdOutlineStar
-                                                
+
                                                 className="cursor-pointer text-2xl text-white ml-1 mr-1"
                                                 onMouseEnter={() => setHover(i)}
                                                 onMouseLeave={() => setHover(null)}
@@ -124,13 +128,22 @@ const NewPlace = () => {
                             <label className="text-white font-semibold mb-2">
                                 Ingresa las coordenadas
                             </label>
-                            <input
-                                className="border-2 w-full p-2 placeholder-gray-600 rounded-md"
-                                type="text"
-                                placeholder="Ingresa las coordenadas"
-                                value={newPlace.location}
-                                onChange={(e) => setNewPlace({ ...newPlace, location: e.target.value })}
-                            />
+                            <div>
+                                <input
+                                    className="border-2 w-full p-2 placeholder-gray-600 rounded-md"
+                                    type="text"
+                                    placeholder="Latitud"
+                                    value={newPlace.latitud}
+                                    onChange={(e) => setNewPlace({ ...newPlace, latitud: e.target.value })}
+                                />
+                                <input
+                                    className="border-2 w-full p-2 mt-6 placeholder-gray-600 rounded-md"
+                                    type="text"
+                                    placeholder="Longitud"
+                                    value={newPlace.longitud}
+                                    onChange={(e) => setNewPlace({ ...newPlace, longitud: e.target.value })}
+                                />
+                            </div>
                         </div>
 
 

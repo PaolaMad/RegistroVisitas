@@ -22,32 +22,33 @@ export const Login = () => {
     password: ''
   });
 
+
   const { API_URL } = constants();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // try {
-    //   const response = await fetch(`${API_URL}/api/auth/login`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(login)
-    //   });
+    try {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(login)
+      });
+      
+      navigate('/home');
 
-    //   navigate('/home');
+      if (!response.ok) {
+        throw new Error('Error en el inicio de sesion')
+      }
+      const result = await response.json();
+      login.result(data);
+      console.log(result);
 
-    //   if (!response.ok) {
-    //     throw new Error('Error en el inicio de sesion')
-    //   }
-    //   const result = await response.json();
-    //   login.result(data);
-    //   // console.log(result);
-
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    } catch (error) {
+      console.log(error)
+    }
 
   }
 
