@@ -9,8 +9,8 @@ const NewLocation = ({ onAddLocation }) => {
         latitude: 15.0000000,
         longitude: -86.5000000,
         zoom: 5,
-        width: '500px',
-        height: '500px'
+        width: '400px',
+        height: '400px'
     });
 
     const [markers, setMarkers] = useState({
@@ -33,9 +33,9 @@ const NewLocation = ({ onAddLocation }) => {
 
     return (
 
-        // <div
-        //     className="flex flex-col justify-center items-center mt-20 border border-spacing-0"
-        //     style={{ width: '100%', height: '80%' }}>
+         <div
+             className="flex flex-col justify-center items-center mt-8 border border-spacing-0"
+             style={{ width: '80%', height: '80%' }}>
             <ReactMapGL
                 {...viewport}
                 mapboxApiAccessToken="pk.eyJ1IjoibW9ucm95bXVzaWM3IiwiYSI6ImNsdnN4ZjU3MTE2M3YybG1nZWF1MXd2aGMifQ.EF6-p5iVvjsepYsneON4kQ"
@@ -57,7 +57,7 @@ const NewLocation = ({ onAddLocation }) => {
                     <MdPlace style={{ color: 'red', fontSize: 24 }} />
                 </Marker>
             </ReactMapGL>
-        // </div>
+         </div>
     );
 };
 

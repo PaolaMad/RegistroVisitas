@@ -41,8 +41,6 @@ const NewPlace = () => {
         e.preventDefault();
 
         try {
-            // console.log(newPlace);
-
             if (newPlace.latitude === '' || newPlace.longitude === '')
                 return alert('Por favor, selecciona una ubicacion en el mapa');
 
@@ -67,7 +65,6 @@ const NewPlace = () => {
         } catch (error) {
             console.log(error);
         }
-
     }
 
     const onLocationChange = (location) => {

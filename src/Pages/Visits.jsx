@@ -36,7 +36,6 @@ const Visits = () => {
       console.log(error);
       return [];
     }
-
   }
 
   useEffect(() => {
@@ -53,7 +52,7 @@ const Visits = () => {
             Mis Visitas
         </Title>
 
-        <div className="grid grid-cols-2 gap-2 md:h-lvh overflow-y-scroll">
+        <div className="flex flex-col gap-2 md:h-lvh overflow-y-scroll">
           {
             places.map((place) => <Card key={ place.id } { ...place }/>)
           }
