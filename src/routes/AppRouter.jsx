@@ -7,6 +7,7 @@ import Sidebar from "../components/Sidebar"
 import { Home } from "../Pages/Home"
 import Visits from "../Pages/Visits"
 import Locations from "../Pages/Locations"
+import NewLocation from "../Pages/NewLocation"
 import { PrivateRoute } from "./PrivateRoute"
 import Login from "../components/Login"
 
@@ -15,7 +16,7 @@ import Login from "../components/Login"
 const AppRouter = () => {
     return (
         <Routes>
-            <Route path="/login" element={
+            <Route path="/" element={
                 <PublicRoute>
                     <Login />
                 </PublicRoute>

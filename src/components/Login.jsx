@@ -22,6 +22,7 @@ export const Login = () => {
     password: ''
   });
 
+
   const { API_URL } = constants();
 
   const handleSubmit = async (e) => {
@@ -36,14 +37,14 @@ export const Login = () => {
         body: JSON.stringify(loginForm)
       });
       
-      navigate('/home');
-
+      
       if (!response.ok) {
         throw new Error('Error en el inicio de sesion')
       }
       const result = await response.json();
       login(result.data);
       console.log(result);
+      navigate('/home');
 
     } catch (error) {
       console.log(error)

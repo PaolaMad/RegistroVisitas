@@ -4,5 +4,5 @@ import { AuthContext } from "../context/AuthContext";
 
 export const PublicRoute = ( {children} ) => {
     const { logged } = useContext(AuthContext);
-    return !logged ? children : <Navigate to="/login" />
+    return !logged ? children : <Navigate to="/home" />
 }

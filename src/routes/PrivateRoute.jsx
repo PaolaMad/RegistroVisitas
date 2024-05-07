@@ -6,6 +6,6 @@ export const PrivateRoute = ( {children} ) => {
 
     const { logged } = useContext(AuthContext);
 
-  return logged ? children : <Navigate to='/home'/>
+  return logged ? children : <Navigate to='/'/>
 }
 

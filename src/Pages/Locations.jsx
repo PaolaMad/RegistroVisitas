@@ -1,28 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl';
 import { MdPlace } from 'react-icons/md';
+import { constants } from '../helpers/constants';
 
 const Locations = ({ initialLocations}) => {
     const [viewport, setViewport] = useState({
-        latitude: {latitude},
-        longitude: {longitude},
+        latitude: '15.0000000',
+        longitude: '-86.5000000',
         zoom: 5,
         width: '500px',
         height: '500px'
     });
 
-    const [markers, setMarkers] = useState(initialLocations || []);
+    const [markers, setMarkers] = useState([]);
+    const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
-    const handleMapClick = (e) => {
-        const { lngLat } = e;
-        if (lngLat) {
-            const newMarker = {
-                longitude: lngLat.lng,
-                latitude: lngLat.lat
-            };
-            setMarkers([...markers, newMarker]);
+    const { API_URL } = constants();
+
+    // const handleMapClick = (e) => {
+    //     const { lngLat } = e;
+    //     if (lngLat) {
+    //         const newMarker = {
+    //             longitude: lngLat.lng,
+    //             latitude: lngLat.lat
+    //         };
+    //         setMarkers([...markers, newMarker]);
+    //     }
+    // };
+  
+    const allPlaces = async () => {
+  
+      try {
+  
+        const response = await fetch(`${ API_URL }/api/place`, {
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${user.token}`,
+              'Content-Type': 'application/json',
+          },
+        });
+  
+        if (!response.ok) {
+            throw new Error('Error al cargar las visitas...');
         }
-    };
+  
+        const res = await response.json();
+  
+        setMarkers(res.data);
+
+      } catch (error) {
+        console.log(error);
+        return [];
+      }
+  
+    }
+  
+    useEffect(() => {
+  
+      allPlaces();
+  
+    }, []);
 
     return (
 
@@ -44,8 +81,8 @@ const Locations = ({ initialLocations}) => {
                     trackUserLocation={true}
                 />
 
-                {markers.map((marker, index) => (
-                    <Marker key={index} longitude={marker.longitude} latitude={marker.latitude}>
+                {markers.map(({ longitude, latitude }, index) => (
+                    <Marker key={index} longitude={longitude} latitude={latitude}>
                         <MdPlace style={{ color: 'red', fontSize: 24 }} />
                     </Marker>
                 ))}

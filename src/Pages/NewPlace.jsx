@@ -1,18 +1,27 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { constants } from "../helpers/constants";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineStarBorder } from "react-icons/md";
 import { MdOutlineStar } from "react-icons/md";
+import { AuthContext } from "../context/AuthContext";
+import Locations from "./Locations";
+import NewLocation from "./NewLocation";
 
 const NewPlace = () => {
 
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState('');
+    const [ location, setLocation ] = useState({
+        latitude: 0,
+        longitude: 0
+    });
+    const { refreshToken } = useContext(AuthContext);
+    const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
     const [newPlace, setNewPlace] = useState({
         placeName: '',
         description: '',
-        rating: '',
+        rating: 0,
         latitude: '',
         longitude: '',
     });
@@ -24,16 +33,21 @@ const NewPlace = () => {
     const handleRating = (currentRating) => {
         setRating(currentRating);
         setNewPlace({ ...newPlace, rating: currentRating });
-        console.log(currentRating);
+        // console.log(currentRating);
 
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
 
         try {
-            const response = await fetch(`https://localhost:7252/api/place`, {
+            // console.log(newPlace);
+
+            if (newPlace.latitude === '' || newPlace.longitude === '')
+                return alert('Por favor, selecciona una ubicacion en el mapa');
+
+            const response = await fetch(`${ API_URL }/api/place`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
@@ -46,8 +60,10 @@ const NewPlace = () => {
                 throw new Error('Error al añadir la visita');
             }
 
+            alert((await response.json()).message);
 
-            setNewPlace(newPlace)
+            setNewPlace(newPlace);
+            navigate('/visitas');
 
         } catch (error) {
             console.log(error);
@@ -55,10 +71,17 @@ const NewPlace = () => {
 
     }
 
+    const onLocationChange = (location) => {
+        // console.log(location);
+        setLocation(location);
+        setNewPlace({ ...newPlace, latitude: location.latitude.toString(), longitude: location.longitude.toString() });
+        // console.log(newPlace);
+    }
+
     return (
         <div className="flex bg-yellow-700">
 
-            <div className="flex flex-col justify-center items-center p-3 w-full h-full   md:h-screen">
+            <div className="flex flex-col justify-center items-center p-3 w-full h-full md:h-screen overflow-y-scroll">
 
                 <div className="container flex flex-col justify-center items-center shadow-2xl bg-yellow-600 rounded-xl p-4">
 
@@ -74,8 +97,8 @@ const NewPlace = () => {
                                 className="border-2 w-full p-2 placeholder-gray-600 rounded-md"
                                 type="text"
                                 placeholder="Nombre del lugar"
-                                value={newPlace.namePlace}
-                                onChange={(e) => setNewPlace({ ...newPlace, namePlace: e.target.value })}
+                                value={newPlace.placeName}
+                                onChange={(e) => setNewPlace({ ...newPlace, placeName: e.target.value })}
                             />
                         </div>
 
@@ -95,7 +118,7 @@ const NewPlace = () => {
                                 Calificacion
                             </label>
                             {[...Array(5)].map((_, i) => {
-                                const currentRating = i + 0;
+                                const currentRating = i + 1;
                                 return (
                                     <label key={i}>
 
@@ -104,19 +127,19 @@ const NewPlace = () => {
                                             name="rating"
                                             style={{ display: 'none' }}
                                             value={currentRating}
-                                            onClick={() => handleRating(currentRating)}
+                                            onClick={ () => handleRating(currentRating) }
                                         />
-                                        {currentRating <= hover ? (
+                                        {currentRating <= (hover || rating) ? (
                                             <MdOutlineStar
-
                                                 className="cursor-pointer text-2xl text-white ml-1 mr-1"
-
+                                                onMouseEnter={ () => setHover(currentRating) }
+                                                onMouseLeave={ () => setHover(0) }
                                             />
                                         ) : (
                                             <MdOutlineStarBorder
                                                 className="cursor-pointer text-2xl text-white ml-1 mr-1"
-                                                onMouseEnter={() => setHover(i)}
-                                                onMouseLeave={() => setHover(null)}
+                                                onMouseEnter={ () => setHover(currentRating) }
+                                                onMouseLeave={ () => setHover(0) }
                                             />
                                         )}
                                     </label>
@@ -135,6 +158,7 @@ const NewPlace = () => {
                                     placeholder="Latitud"
                                     value={newPlace.latitude}
                                     onChange={(e) => setNewPlace({ ...newPlace, latitude: e.target.value })}
+                                    disabled
                                 />
                                 <input
                                     className="border-2 w-full p-2 mt-6 placeholder-gray-600 rounded-md"
@@ -142,13 +166,21 @@ const NewPlace = () => {
                                     placeholder="Longitud"
                                     value={newPlace.longitude}
                                     onChange={(e) => setNewPlace({ ...newPlace, longitude: e.target.value })}
+                                    disabled
                                 />
+                            </div>
+                        </div>
+
+                        {/* div de 600px */}
+                        <div className="flex justify-center content-center">
+                            <div className="w-96 h-96 ">
+                                <NewLocation onAddLocation={ onLocationChange } />
                             </div>
                         </div>
 
 
                         <div className="text-white mt-3 flex items-center justify-center">
-                            <button type="button" className="bg-yellow-700 rounded-md p-2">
+                            <button type="submit" className="bg-yellow-700 rounded-md p-2">
                                 Registrar Visita
                             </button>
 

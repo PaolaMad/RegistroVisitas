@@ -6,6 +6,7 @@ import { FiMap } from "react-icons/fi";
 
 import { Navigate, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 
 const NavItem = ({ icon, title, onClick, open }) => (
@@ -24,15 +25,12 @@ const NavItem = ({ icon, title, onClick, open }) => (
 const Sidebar = () => {
     const [open, setOpen] = useState(true);
     const navigate = useNavigate();
-    // const {logout}= useContext();
+    const { logout }= useContext(AuthContext);
 
-    const handleLogout = () =>{
-
-        localStorage.clear();
-    
-        navigate('/login')
-    
-      } 
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    }
     
     return (
         <div className="flex">
@@ -85,7 +83,7 @@ const Sidebar = () => {
                 <ul className="  absolute bottom-2 ">
                     <NavItem
                         icon={<CiLogout />}
-                        onClick={handleLogout}
+                        onClick={ handleLogout }
                         open={open}
                         title={"Cerrar Sesion"}
                     />
