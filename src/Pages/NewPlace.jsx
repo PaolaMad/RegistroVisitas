@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineStarBorder } from "react-icons/md";
 import { MdOutlineStar } from "react-icons/md";
 import { AuthContext } from "../context/AuthContext";
-import Locations from "./Locations";
 import NewLocation from "./NewLocation";
 
 const NewPlace = () => {
